@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on </title>
-    <link>http://amazething.github.io/post/</link>
+    <link>https://amazething.github.io/post/</link>
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Tue, 13 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://amazething.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://amazething.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>AMaze简介</title>
-      <link>http://amazething.github.io/post/amaze/</link>
+      <link>https://amazething.github.io/post/amaze/</link>
       <pubDate>Tue, 13 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://amazething.github.io/post/amaze/</guid>
+      <guid>https://amazething.github.io/post/amaze/</guid>
       <description>AMaze成立于2017年6月,AMaze依托华北电力大学电力智能机器人工程技术研究中心，致力于探索发现智能机器人群体协作中的规律以及环境感知等技术。 AMaze团队由吴华博士和一群富有热情懂得坚持善于创新的学生组成。本团队近期重点着力于两方面的研究：一是机器人的自主导航，二是飞行机器人的编队和协同。团队将取得的各种进展和成果开源到Github上，期待与更多愿意投身于智能机器人创新和研究的朋友们进行交流协作，创造出更加有趣的作品。</description>
     </item>
     
     <item>
       <title>华电60周年校庆编队报导</title>
-      <link>http://amazething.github.io/post/innovate/</link>
+      <link>https://amazething.github.io/post/innovate/</link>
       <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://amazething.github.io/post/innovate/</guid>
+      <guid>https://amazething.github.io/post/innovate/</guid>
       <description>-2018年10月27日晚，由控计学院吴华老师带领的AMaze（amazething.io）师生创新团队在华电操场上空上演了一场精彩的无人机编队灯光秀，为母校60华诞献上生日祝福。学院党委书记刘威、常务副院长房方莅临现场，超过2000名师生校友观看了现场表演。 无人机在天空组成I ❤ N C E P U的字样，迎着夜空升起，在空中散发绚丽的色彩，华电学子对母校的爱和祝福萦绕心头。
 -这些夜空的精灵时而穿梭变换成“□”阵型形成凝聚力极强的团体，时而悄悄地摆出“❤”阵型表示对知识的追寻，时而组成“⚡”符号展示出华电的特色。
 -在夜空中，N C E P U这五个字母被精灵们围绕在空中造出一个巨大的校徽，在地球表面以最特殊的方式向全球华电学子展现了母校的思念与关怀。
@@ -34,10 +34,10 @@
     
     <item>
       <title>无人机编队</title>
-      <link>http://amazething.github.io/post/formation/</link>
+      <link>https://amazething.github.io/post/formation/</link>
       <pubDate>Mon, 12 Nov 2018 21:35:59 +0800</pubDate>
       
-      <guid>http://amazething.github.io/post/formation/</guid>
+      <guid>https://amazething.github.io/post/formation/</guid>
       <description>目录  一、组装一架满足编队需求的飞机
  二、软件及嵌入式系统配置
  三、编队程序解析
@@ -62,10 +62,10 @@
     
     <item>
       <title>机器人导航</title>
-      <link>http://amazething.github.io/post/navigation/</link>
+      <link>https://amazething.github.io/post/navigation/</link>
       <pubDate>Sun, 11 Nov 2018 12:00:29 +0800</pubDate>
       
-      <guid>http://amazething.github.io/post/navigation/</guid>
+      <guid>https://amazething.github.io/post/navigation/</guid>
       <description>目录  一、系统镜像解包与打包
  二、系统镜像裁剪（最小文件系统制作）
  三、系统烧录
@@ -81,19 +81,19 @@
     
     <item>
       <title>Auterion在线讲座公开课</title>
-      <link>http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</link>
+      <link>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</link>
       <pubDate>Sat, 10 Nov 2018 14:52:48 +0800</pubDate>
       
-      <guid>http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</guid>
+      <guid>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</guid>
       <description>  </description>
     </item>
     
     <item>
       <title>AMaze团队</title>
-      <link>http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</link>
+      <link>https://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</link>
       <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</guid>
+      <guid>https://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</guid>
       <description>指导老师
 电子组 嵌入式组 感知组
 指导老师    指导老师（teacher）    吴华
