@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on </title>
+    <link>http://amazething.github.io/post/</link>
+    <description>Recent content in Posts on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 13 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://amazething.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AMaze简介</title>
+      <link>http://amazething.github.io/post/amaze/</link>
+      <pubDate>Tue, 13 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://amazething.github.io/post/amaze/</guid>
+      <description>AMaze成立于2017年6月,AMaze依托华北电力大学电力智能机器人工程技术研究中心，致力于探索发现智能机器人群体协作中的规律以及环境感知等技术。 AMaze团队由吴华博士和一群富有热情懂得坚持善于创新的学生组成。本团队近期重点着力于两方面的研究：一是机器人的自主导航，二是飞行机器人的编队和协同。团队将取得的各种进展和成果开源到Github上，期待与更多愿意投身于智能机器人创新和研究的朋友们进行交流协作，创造出更加有趣的作品。</description>
+    </item>
+    
+    <item>
+      <title>华电60周年校庆编队报导</title>
+      <link>http://amazething.github.io/post/innovate/</link>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://amazething.github.io/post/innovate/</guid>
+      <description>-2018年10月27日晚，由控计学院吴华老师带领的AMaze（amazething.io）师生创新团队在华电操场上空上演了一场精彩的无人机编队灯光秀，为母校60华诞献上生日祝福。学院党委书记刘威、常务副院长房方莅临现场，超过2000名师生校友观看了现场表演。 无人机在天空组成I ❤ N C E P U的字样，迎着夜空升起，在空中散发绚丽的色彩，华电学子对母校的爱和祝福萦绕心头。
+-这些夜空的精灵时而穿梭变换成“□”阵型形成凝聚力极强的团体，时而悄悄地摆出“❤”阵型表示对知识的追寻，时而组成“⚡”符号展示出华电的特色。
+-在夜空中，N C E P U这五个字母被精灵们围绕在空中造出一个巨大的校徽，在地球表面以最特殊的方式向全球华电学子展现了母校的思念与关怀。
+-无人机慢慢组成“六十”的字样。再次把整个表演推向了高潮。在这六十字样的背后，有无数华电校友用智慧和生命创造着全球能源电力的奇迹。全球顶尖的电力人才汇集于此，共祝华电60岁生日快乐！夜幕降临，华电六十华诞的脚步愈来愈近，星光闪烁，那是无人机点燃了夜空中的生日蜡烛，时间定格在这个瞬间…… -Amaze团队还将开源本次编队的所有文档资料和代码。欢迎关注AMaze微信公众号、团队网站。期待下一个创造Amazing thing的你加入团队！  </description>
+    </item>
+    
+    <item>
+      <title>无人机编队</title>
+      <link>http://amazething.github.io/post/formation/</link>
+      <pubDate>Mon, 12 Nov 2018 21:35:59 +0800</pubDate>
+      
+      <guid>http://amazething.github.io/post/formation/</guid>
+      <description>目录  一、组装一架满足编队需求的飞机
+ 二、软件及嵌入式系统配置
+ 三、编队程序解析
+ 四、许可
+  组装一架满足编队需求的飞机 系统需求 无人机 1．使用Pixhawk作为其飞行控制器的无人机。
+2．一个微型车载Linux计算机。(例如:树莓派)
+3．带有USB适配器的XBee模块。(例如:XBee S1, XBee S2C，等等)
+4．(可选)用于调试的USB- ttl适配器(例如FT232, CP2102/CP2104，不使用PL2303) 示例:XBee模块通过USB连接到RPi, RPi通过UART连接到Pixhawk。在Rpi上配置硬件UART，使其运行在921600bps 波特率，与Pixhawk系列的设置一致。(http://ardupilot.org/dev/docs/partner-computers.html)
+地面控制站 1．一个Linux计算机。(虚拟机也可以)
+2．带有USB适配器的XBee模块。(如XBee S1, XBee S2C等) 通常一个多旋翼组成包括以下硬件（四轴）：
+一个四轴飞行器的构成：  四轴机架 X1（必须）
+ 动力马达 X4 （必须）
+ 无刷电子调速器（电调/ESC）X4 （必须）
+ PixhACK v3 飞控 X1 （必须）
+ CUAV GPS X1 （必须）
+ 无线数传 (CUAV RADIO/XBEE/XTEND/HACKLINK/WP-LINK） X1对 （必须）
+ 动力电池（必须）
+ RC遥控器和RC接收机（必须）
+ 无刷云台或者相机（可选）
+ 超声波或者激光传感器（可选）</description>
+    </item>
+    
+    <item>
+      <title>机器人导航</title>
+      <link>http://amazething.github.io/post/navigation/</link>
+      <pubDate>Sun, 11 Nov 2018 12:00:29 +0800</pubDate>
+      
+      <guid>http://amazething.github.io/post/navigation/</guid>
+      <description>目录  一、系统镜像解包与打包
+ 二、系统镜像裁剪（最小文件系统制作）
+ 三、系统烧录
+ 四、串口调试
+ 五、系统内核修改
+ 六、系统环境配置
+ 七、交叉编译器
+ 八、Motive配置
+ 九、许可
+  系统镜像解包与打包 本项目最初使用的是型号为MIQI（SBC）的板卡，处理器为RK3288。考虑使用MIQI官网提供的lubuntu14.04社区版本的固件，而在项目中间需要增添以及需改驱动，以及文件系统，那么就需要将固件解包，然后修改内核，文件系统，然后再打包，如下则为该过程详解：
+1.获得源码： 1. $mkdir miqi_root 2. $cd miqi_root 3. $git clone https://github.com/mqmaker/miqi-linux-build.git build 4. $git checkout -b rklinux remotes/origin/miqi/v3.10 5. $git clone https://github.com/mqmaker/miqi-linux-kernel.git rockchip-kernel 6. $git checkout -b linux remotes/origin/miqi/linux  2.将官网下载的lubuntu解包： 1. ./ rkImageMaker -unpack lubuntu镜像存放的位置 要存放到的位置 （本项目是创建了一个与后面提到的内核源码处于同一级目录下的文件夹build） 2. ./afptool -unpack build/firmware.img buid/unpack 3.修改后打包 修改即对内核或者是文件系统进行修改后，用新的内核或者是文件系统替换原来镜像中对应的内核或者是文件系统。  注意：package-file里面的linuxroot路径是错的，在linuxroot前面加上Image\，即最后一行修改成如下样式。</description>
+    </item>
+    
+    <item>
+      <title>Auterion在线讲座公开课</title>
+      <link>http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</link>
+      <pubDate>Sat, 10 Nov 2018 14:52:48 +0800</pubDate>
+      
+      <guid>http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</guid>
+      <description>  </description>
+    </item>
+    
+    <item>
+      <title>AMaze团队</title>
+      <link>http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</guid>
+      <description>指导老师
+电子组 嵌入式组 感知组
+指导老师    指导老师（teacher）    吴华
+吴华（1981年生）博士现任华北电力大学控制与计算机工程学院副教授，硕士生导师，华北电力大学电力智能机器人工程技术研究中心主任。主要研究方向为：全自主巡检、机器人及无人机的同步定位与地图构建（SLAM）、影像识别、物流无人机的组合导航、多传感器融合、计算机视觉、机器学习、嵌入式计算等。AMaze团队是由吴华博士发起，并由一群喜爱智能机器人并愿意培养动手能力的优秀学生组成。通过对飞行机器人协同和环境感知等方向的实验和探索，不断提升团队成员的工程能力，鼓励形成各种有趣开源的创新作品。    Wu Hua
+WU (born in 1981, China) is Associate Professor of the School of Control and Computer Engineering at North China Electric Power University, where he does research at the intersection of robotics, computer vision and machine learning. Specifically, he investigates the use of SLAM and machine learning to enable autonomous inspection with embedded on-board computation using vision, LIDAR and smart sensors for drones in inspection, monitoring and logistics scenarios.</description>
+    </item>
+    
+  </channel>
+</rss>

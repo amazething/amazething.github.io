@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en-US" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>机器人导航 &middot; </title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://amazething.github.io/favicon.ico" />
+    <link rel="canonical" href="http://amazething.github.io/post/navigation/" />
+
+     <meta name="description" content="机器人导航相关内容，共七部分。" /> 
+
+    <meta name="generator" content="Hugo 0.51" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://amazething.github.io/built/screen.css" /> 
+    <link rel="stylesheet" type="text/css" href="http://amazething.github.io/css/casper-two.css" /> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
+    
+
+     
+
+</head>
+
+
+<body class="post-template">
+  <div class="site-wrapper"> 
+
+<header class="site-header outer">
+  <div class="inner">
+    <nav class="site-nav">
+      <div class="site-nav-left">
+        <a class="site-nav-logo" href="#"><img src="http://amazething.github.io/logo.png" alt="AMaze" /></a>
+
+        <ul class="nav" role="menu">
+        
+        
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/">主页</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="https://amazeflydocs.readthedocs.io/en/latest/">无人机编队</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="https://amazenavdocs.readthedocs.io/en/latest/">机器人导航</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/tags/innovate/">创新展示</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/">团队成员</a>
+            </li>
+        
+      </ul></div>
+
+      <div class="site-nav-right">
+        <div class="social-links">
+
+                    <a class="social-link" href="https://github.com/AMaze" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>  
+            
+      </div>
+
+    </nav>  
+
+  </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+  <div class="inner">
+    
+      <article class="post-full post"> 
+    <header class="post-full-header">
+        <section class="post-full-meta">
+            <time class="post-full-meta-date" datetime="2018-11-11">11 November 2018</time>
+        </section>
+        <h1 class="post-full-title">机器人导航</h1>
+    </header>
+    
+    <figure class="post-full-image" style="background-image: url(http://amazething.github.io/img/plane.jpg)">
+    </figure>
+
+    <section class="post-full-content">
+        <div class="kg-card-markdown">
+        
+
+<h4 id="目录">目录</h4>
+
+<ul>
+<li><p><a href="#系统镜像解包与打包">一、系统镜像解包与打包</a></p></li>
+
+<li><p><a href="#系统镜像裁剪">二、系统镜像裁剪（最小文件系统制作）</a></p></li>
+
+<li><p><a href="#系统烧录">三、系统烧录</a></p></li>
+
+<li><p><a href="#串口调试">四、串口调试</a></p></li>
+
+<li><p><a href="#系统内核修改">五、系统内核修改</a></p></li>
+
+<li><p><a href="#系统环境配置">六、系统环境配置</a></p></li>
+
+<li><p><a href="#交叉编译器">七、交叉编译器</a></p></li>
+
+<li><p><a href="#motive配置">八、Motive配置</a></p></li>
+
+<li><p><a href="#license">九、许可</a></p></li>
+</ul>
+
+<h1 id="系统镜像解包与打包">系统镜像解包与打包</h1>
+
+<p>本项目最初使用的是型号为MIQI（SBC）的板卡，处理器为RK3288。考虑使用MIQI官网提供的lubuntu14.04社区版本的固件，而在项目中间需要增添以及需改驱动，以及文件系统，那么就需要将固件解包，然后修改内核，文件系统，然后再打包，如下则为该过程详解：</p>
+
+<h2 id="1-获得源码">1.获得源码：</h2>
+
+<pre><code>1.  $mkdir miqi_root
+2.  $cd miqi_root
+3.  $git clone https://github.com/mqmaker/miqi-linux-build.git build
+4.  $git checkout -b rklinux remotes/origin/miqi/v3.10
+5.  $git clone https://github.com/mqmaker/miqi-linux-kernel.git rockchip-kernel
+6.  $git checkout -b linux remotes/origin/miqi/linux
+</code></pre>
+
+<h2 id="2-将官网下载的lubuntu解包">2.将官网下载的lubuntu解包：</h2>
+
+<pre><code>1. ./ rkImageMaker -unpack lubuntu镜像存放的位置 要存放到的位置
+（本项目是创建了一个与后面提到的内核源码处于同一级目录下的文件夹build）
+2. ./afptool -unpack build/firmware.img buid/unpack
+3.修改后打包
+修改即对内核或者是文件系统进行修改后，用新的内核或者是文件系统替换原来镜像中对应的内核或者是文件系统。
+</code></pre>
+
+<p>注意：package-file里面的linuxroot路径是错的，在linuxroot前面加上Image\，即最后一行修改成如下样式。</p>
+
+<pre><code># NAME      Relative path
+#
+#HWDEF      HWDEF
+package-file    package-file
+bootloader  RKLoader.bin
+parameter   parameter
+# boot to linux
+recovery           Image\recovery.img
+#cache       Image\small_ext4.img
+#data       Image\small_ext4.img
+backup          RESERVED
+linuxroot   Image\linuxroot.img 
+</code></pre>
+
+<p>修改过后，使用以下脚本进行打包（注意前面变量设置，工具链存放位置，若不对的话可以修改脚本或者移动工具链）：</p>
+
+<pre><code>#!/bin/bash
+SWD=$(cd &quot;$(dirname &quot;$0&quot;)&quot;; pwd)
+AFPTOOL=${SWD}/../afptool
+IMGMAKER=${SWD}/../rkImageMaker
+#GEN_DIR=${SWD}/gen
+#OUT_DIR=${SWD}/out
+TMP_IMG=firmware.img
+UPDATE_IMG=ubuntu1404-sfs.img
+LOADER=RKLoader.bin
+
+pause()
+{
+echo &quot;Press any key to quit:&quot;
+read -n1 -s key
+exit 1
+}
+echo &quot;start to make update.img...&quot;
+# read pack-file packing to update.img
+#mkdir -p ${GEN_DIR}
+#mkdir -p ${OUT_DIR}
+echo ${SWD} $TMP_IMG
+$AFPTOOL -pack ${SWD} $TMP_IMG || pause
+# merge uboot and firmware
+rm -f ${UPDATE_IMG}
+$IMGMAKER -RK32 $LOADER $TMP_IMG ${UPDATE_IMG} -os_type:androidos || pause
+#rm -r ${GEN_DIR}
+echo &quot;Making lubuntu1404.img OK.&quot;
+#echo &quot;Press any key to quit:&quot;
+#read -n1 -s key
+exit 0
+</code></pre>
+
+<p>注意：倒数第四行中echo &ldquo;Making lubuntu1404.img OK.&rdquo;   lubuntu1404.img为你要修改后的镜像名。</p>
+
+<h1 id="系统镜像裁剪">系统镜像裁剪</h1>
+
+<h2 id="1-获得ubuntu最小裸文件系统">1.获得ubuntu最小裸文件系统</h2>
+
+<h3 id="1-从ubuntu官方网站下载其提供的最小裸文件系统">（1）从ubuntu官方网站下载其提供的最小裸文件系统。</h3>
+
+<pre><code>  mkdir~/ubuntu-rootfs
+  cd ubuntu-rootfs
+</code></pre>
+
+<p>下载Ubuntu Core rootfs</p>
+
+<pre><code>wget http://cdimage.ubuntu.com/ubuntu-core/releases/14.04.1/release/ubuntu-core-14.04-core-armhf.tar.gz
+</code></pre>
+
+<p>或者直接去网上找到对应的版本下载</p>
+
+<h3 id="2-解压ubuntu-core-rootfs-tar包">（2）解压Ubuntu Core rootfs tar包</h3>
+
+<pre><code>sudo tar -xzvf ubuntu-core-14.04-core-armhf.tar.gz
+</code></pre>
+
+<h3 id="3-由于我们要chroot-所以需要能够在chroot环境执行armhf版本的binary-所以我们要接触linux的binfmt机制和qemu-static解释器">（3）由于我们要chroot，所以需要能够在chroot环境执行armhf版本的binary，所以我们要接触linux的binfmt机制和qemu static解释器。</h3>
+
+<pre><code>sudo apt-getinstall qemu-user-static
+sudo cp/usr/bin/qemu-arm-static ubuntu-rootfs /usr/bin/
+</code></pre>
+
+<h3 id="4-将本机的dns配置复制到目标rootfs-后面联网时会用到">（4）将本机的dns配置复制到目标rootfs，后面联网时会用到</h3>
+
+<pre><code>sudo cp -b/etc/resolv.conf ~/ubuntu-rootfs/etc/resolv.conf
+</code></pre>
+
+<h2 id="2-挂载文件系统">2.挂载文件系统</h2>
+
+<pre><code>sudo mount –t proc /proc ~/ubuntu-rootfs/proc
+sudo mount –t sysfs /sys ~/ubuntu-rootfs/sys
+sudo mount –o bind /dev ~/ubuntu-rootfs/dev
+sudo mount –o bind /dev/pts ~/ubuntu-rootfs/dev/pts
+</code></pre>
+
+<h2 id="3-chroot-进入chroot环境">3.chroot(进入chroot环境)</h2>
+
+<pre><code>sudo chroot ~/ubuntu-rootfs/
+</code></pre>
+
+<h2 id="4-配置网络服务">4.配置网络服务</h2>
+
+<p>使用vim或者是vi，修改/etc/apt/sources.list的内容。去掉除以deb-src开头的
+所有库的注释。</p>
+
+<pre><code>  vim /etc/apt/sources.list
+ 或vi /etc/apt/sources.list
+</code></pre>
+
+<h2 id="5-安装软件">5.安装软件</h2>
+
+<p>首先需要更新软件源</p>
+
+<pre><code>sudo apt-get update
+</code></pre>
+
+<p>注意：如果失败，就需要配置dns，resolv.conf
+建议安装软件如下：</p>
+
+<pre><code>SSH，远程登陆系统需要用到。
+Networkmanager,网络管理的软件。
+wireless-tools。
+等等。
+</code></pre>
+
+<p>安装对应软件直接使用下方命令行：</p>
+
+<pre><code>apt-get install 软件名
+</code></pre>
+
+<h2 id="6-设置用户相关">6.设置用户相关</h2>
+
+<p>adduser Ubuntu，然后根据提示设置密码。
+设置主机名称：</p>
+
+<pre><code>echo&quot;ubuntu-arm&quot;&gt;/etc/hostname
+</code></pre>
+
+<p>设置本机入口ip：</p>
+
+<pre><code>echo&quot;127.0.0.1 localhost&quot;&gt;&gt;/etc/hosts
+echo&quot;127.0.1.1 ubuntu-arm&quot;&gt;&gt;/etc/hosts
+</code></pre>
+
+<p>允许自动更新dns：</p>
+
+<pre><code>dpkg-reconfigureresolvconf
+</code></pre>
+
+<p>设置时区：</p>
+
+<pre><code>dpkg-reconfiguretzdata
+</code></pre>
+
+<h2 id="7-配置串口调试">7.配置串口调试</h2>
+
+<p>添加一个/etc/init/ttyS2.conf文件（查得官方资料得知调试串口号为ttyS2）</p>
+
+<pre><code>cp tty1.conf ttyS2.conf
+vi ttyS2.conf
+</code></pre>
+
+<p>修改其内容如下：</p>
+
+<pre><code>start on stoppedrc or RUNLEVEL=[12345]
+stop on runlevel[!12345]
+respawn
+exec /sbin/getty-L 115200 ttyS2 vt102
+</code></pre>
+
+<h2 id="8-退出chroot-直接exit">8.退出chroot，直接exit</h2>
+
+<h2 id="9-卸载相关文件系统">9.卸载相关文件系统</h2>
+
+<pre><code>sudo unmount ~/ubuntu-rootfs/proc
+sudo unmount ~/ubuntu-rootfs/sys
+sudo unmount ~/ubuntu-rootfs/dev
+sudo unmount ~/ubuntu-rootfs/dev/pts
+</code></pre>
+
+<h2 id="10-制作系统镜像">10.制作系统镜像</h2>
+
+<p>参考另一篇文档镜像打包与解包，先将原始镜像解包，将这个最小文件系统替换原始镜像
+的文件系统，然后再打包，就做好了。</p>
+
+<blockquote>
+<p>注意：烧录系统后，提示文件系统空间不够，那么就重新resize2fs 分区名。分区名可以用如下命令行：</p>
+</blockquote>
+
+<pre><code>cat /proc/partition
+或 df
+</code></pre>
+
+<p>若出现无法上网的问题，可能需要手动获取IP地址，但如果安装了networkmanager，一般不会出现该问题
+dhclient eth0</p>
+
+<h1 id="系统烧录">系统烧录</h1>
+
+<p>系统烧录在Windows，Ubuntu两个操作系统都可以实现，就之前提到的LUBUNTU社区版，在Windows下烧录较为容易，因此，此文叙述的为Windows下的烧录过程：</p>
+
+<h2 id="1-下载-release-driverassistant-zip-解压-然后运行里面的-driverinstall-exe">1.   下载 Release_DriverAssistant.zip，解压，然后运行里面的 DriverInstall.exe 。</h2>
+
+<p>为了所有设备都使用更新的驱动，请先选择&rdquo;驱动卸载&rdquo;，然后再选择&rdquo;驱动安装&rdquo;。</p>
+
+<h3 id="1-1-下载软件工具">1.1 下载软件工具：</h3>
+
+<p>AndroidTool_Release_v2.39，在MIQI官方文档里就会提供，或者直接从网上下载就行，这是Rockchip官方提供的烧录工具。</p>
+
+<h3 id="1-2-进入软件可以看到如下三界面">1.2 进入软件可以看到如下三界面：</h3>
+
+<p><img src="Fag1.jpg" alt="" title="Fag1" /></p>
+
+<p><img src="Fag2.jpg" alt="" title="Fag2" /></p>
+
+<p><img src="Fag3.jpg" alt="" title="Fag3" /></p>
+
+<p>三种方法都可以实现烧录功能，但是本项目常用的是第二种，因为在做系统镜像时已经将其打包，故下面介绍该种方法：</p>
+
+<h6 id="1-点击-固件-按钮">1.   点击“固件”按钮</h6>
+
+<p>选择对应你要烧录的镜像文件</p>
+
+<h6 id="2-板卡-进入-rockusb-模式">2.   板卡：进入‘rockusb’模式</h6>
+
+<p>（1） 断开USB电源</p>
+
+<p>（2） 使用镊子或回形针按住恢复键</p>
+
+<p>（3） 重新连接USB电源</p>
+
+<p>（4） 等待大约3秒，然后释放恢复键。</p>
+
+<p>（5） PC端上传软件应检测到加载设备</p>
+
+<h6 id="3-执行-升级固件-步骤">3.   执行“升级固件”步骤</h6>
+
+<p>即按下“升级”按钮。在升级后，软件右端还会显示“检查固件”，最好等其执行完再断开。</p>
+
+<h1 id="串口调试">串口调试</h1>
+
+<p>串口调试即是在PC上登陆板卡系统，然后对其进行调试。本项目大致使用到了两种登陆方式，第一种就是在自己PC上的UBUNTU操作系统上使用软件minicom进行登陆，还有一种就是通过SSH远程登入，第二种方法已经在其他文档中介绍了，本文不再赘述，下面介绍的是第一种登陆方法：</p>
+
+<h2 id="1-硬件连接">1.   硬件连接</h2>
+
+<h3 id="使用转串口-将pc与开发板进行连接">使用转串口，将PC与开发板进行连接：</h3>
+
+<p>（1）    转串口GND地线与开发板GND针相连；</p>
+
+<p>（2）    转串口TXD输出线与开发板RX针相连；</p>
+
+<p>（3）    转串口RXD输入线与开发板TX针相连；</p>
+
+<h2 id="2-连接参数">2.   连接参数</h2>
+
+<p>（1）    波特率：115200</p>
+
+<p>（2）    数据位：8</p>
+
+<p>（3）    停止位：1</p>
+
+<p>（4）    奇偶校验位：无</p>
+
+<p>（5）    流控：无</p>
+
+<p>这些参数是需要在minicom上面设置的，基本上只需要设置第一项参数就行，其他一般minicom上设置的都符合要求。</p>
+
+<h2 id="3-串口调试">3.   串口调试</h2>
+
+<ul>
+<li><p>此项即是系统登陆的重要步骤，除了按照第二点提到的需要设置的参数以外，还需要将连接的串口号设置为ttyUSB0。
+设置minicom参数的命令行如下：</p>
+
+<p>sudo minicom –s</p></li>
+
+<li><p>打开该界面后选择第三项，然后进行设置</p></li>
+
+<li><p>注意设置完毕后需要保存，选择第五项，保存设置</p></li>
+
+<li><p>设置完毕后，那么就将板卡上电，用之前提到的转串口的另一端的USB口连接上PC，打开minicom：</p>
+
+<pre><code>sudo minicom
+</code></pre></li>
+
+<li><p>然后就可以进入到板卡的系统里了，注意初次登陆的密码为“miqi”，后面可以自行修改密码。</p></li>
+</ul>
+
+<p><strong>需要注意的地方</strong>：</p>
+
+<h3 id="1-若pc上没有显示板卡打印出来的信息-可以考虑重新上电">1.  若PC上没有显示板卡打印出来的信息，可以考虑重新上电</h3>
+
+<h3 id="2-不再调试时-需要先退出minicom-ctrl-a-x-再停止对板卡的供电-若两步实施顺序改变-则下次使用minicom时会出现以下这种情况">2.  不再调试时，需要先退出minicom（ctrl A + X），再停止对板卡的供电，若两步实施顺序改变，则下次使用minicom时会出现以下这种情况：</h3>
+
+<h4 id="串口被锁-device-dev-ttys0-is-locked">串口被锁（Device /dev/ttyS0 is locked</h4>
+
+<h5 id="解决方法"><strong>解决方法</strong>：</h5>
+
+<pre><code> ls /var/lock
+ 出现LCK..ttyS0  subsys这个文件
+ kill 0
+</code></pre>
+
+<p>之后就可以重新进入minicom了。</p>
+
+<h1 id="系统内核修改">系统内核修改</h1>
+
+<p>本项目对内核修改的操作大致分为两部分，一部分是基本操作，包括编译内核以及编译内核模块和第二部分是本项目的相关特殊操作，包括配置uart3以及增添5g驱动，下面介绍了各部分工作过程：</p>
+
+<h2 id="1-1编译内核">1.1编译内核</h2>
+
+<p>在内核源码下执行make menuconfig之后，就可以看到对应的内核配置界面，用户可以勾选需要编译的驱动以及其他文件，对于驱动可以选择将其直接编译进内核，也可以选择将其编译成模块，如果选择编译成模块，可以参考如下<strong>3.2编译成modules</strong>。
+在用户配置完内核后，会生成一个配置文件，用该配置文件对内核进行编译，用如下脚本进行编译：</p>
+
+<pre><code>#!/bin/bash
+
+###################################################################
+##
+##  You need to change ANDROID_ROOT to real Android SDK path !!!!!
+##
+###################################################################
+
+MIQI_BUILD_DIR=${PWD}
+MIQI_KERNEL_DIR=${PWD}/../rockchip-kernel
+MIQI_ROOTFS_IMG_FULLPATH=
+
+ARCH=arm
+CROSS_COMPILE=arm-eabi-
+export ARCH CROSS_COMPILE
+export PATH=${MIQI_BUILD_DIR}/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin:$PATH
+
+build_kernel()
+    {
+(
+    cd $MIQI_KERNEL_DIR
+    make ARCH=arm xxxx_defconfig
+    make ARCH=arm -j8 rk3288-MiQi.img
+
+    ./mkbootimg --kernel arch/arm/boot/zImage \
+        --ramdisk ${MIQI_BUILD_DIR}/images/rootfs.cpio.gz  \
+        --second resource.img \
+        --output recovery-linux.img
+
+)
+
+    }
+
+build_kernel
+</code></pre>
+
+<p>注意：</p>
+
+<ol>
+<li><p>build_kernel函数中对应的make ARCH=arm xxxx_defconfig这一行中，xxxx_defconfig即为上面提到的你自己配置内核后生成的配置文件，其具体名字需要在脚本中自行修改，该脚本会按照该文件对内核进行编译。</p></li>
+
+<li><p>脚本最前面的变量设置。本人是将内核源码以及build文件夹（即存放lubuntu解包后存放的位置，以及打包后新镜像存放的位置）。因此该脚本是放在build文件夹下。</p></li>
+</ol>
+
+<h2 id="1-2编译modules">1.2编译modules</h2>
+
+<p>在内核源码对应的文件目录下执行如下命令行：</p>
+
+<p>若报错 “编译链位置错误”，则将build文件夹下的prebuild考过去到内核所在文件夹上一级对应makefile中的编译工具链的位置，该文件夹下包含编译内核需要的工具链。</p>
+
+<pre><code>make modules
+mkdir modules_install
+make INSTALL_MOD_PATH=./modules_install modules_install
+</code></pre>
+
+<p>拷到开发版后，清楚模块安装目录(该目录含有链接，会影响SDK的编译)</p>
+
+<h2 id="1-3-配置uart3-即对应系统中ttys3串口-需要连接飞控使用">1.3 配置uart3,即对应系统中ttys3串口，需要连接飞控使用。</h2>
+
+<h3 id="1-3-1配置-dts-节点">1.3.1配置 DTS 节点</h3>
+
+<p>文件 kernel/arch/arm/boot/dts/rk3288.dtsi 中已经有 uart 相关节点定义，</p>
+
+<p>如下所示：uart_gps: serial@ff1b0000 {
+                compatible = &ldquo;rockchip,serial&rdquo;;
+                reg = <0xff1b0000 0x100>;
+                interrupts = <GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>;
+                clock-frequency = <24000000>;
+                clocks = &lt;&amp;clk_uart3&gt;, &lt;&amp;clk_gates6 11&gt;;
+                clock-names = &ldquo;sclk_uart&rdquo;, &ldquo;pclk_uart&rdquo;;
+                current-speed = <115200>;
+                reg-shift = <2>;
+                reg-io-width = <4>;
+                dmas = &lt;&amp;pdma1 7&gt;, &lt;&amp;pdma1 8&gt;;#dma-cells = <2>;
+                pinctrl-names = &ldquo;default&rdquo;;
+                pinctrl-0 = &lt;&amp;uart3_xfer &amp;uart3_cts &amp;uart3_rts&gt;;
+                status = &ldquo;disabled&rdquo;;
+};</p>
+
+<p>注：uart_gps 在该文件的 aliases 节点中被定义为：<strong>serial3 = &amp;uart_gps</strong>;</p>
+
+<p>用户只需在 **kernel/arch/arm/boot/dts/firefly-rk3288.dts **文件中打开所要使用的节点即可，</p>
+
+<p>如下所示：&amp;uart_gps {
+    status = &ldquo;okay&rdquo;;
+    dma-names = &ldquo;!tx&rdquo;, &ldquo;!rx&rdquo;;pinctrl-0 = &lt;&amp;uart3_xfer &amp;uart3_cts&gt;;
+};</p>
+
+<h2 id="1-4增添驱动-5g">1.4增添驱动（5G）</h2>
+
+<p>无人机需要网络传输功能，而实验室环境中受到较多2.4GHZ wifi信号的干扰，那么考虑采用5GHZ wifi 信号。在网上购买5G网卡后，发现需要8811AU驱动，而在内核源码对应的目录下，执行make menuconfig,并未发现8811AU驱动，那么需要自己添加进去，过程如下（在此之前需要将该驱动文件下载下来）：</p>
+
+<p>1、将8811AU.tar.gz（名字可以自行修改）文件解压至”内核源码包/drivers/net/wireless/”路径下。</p>
+
+<p>2、make menuconfig，找到Device drivers-&gt;network device support-&gt;wireless lan-&gt;usb zd1201 based wireless device support*<em>选为</em></p>
+
+<p>3、修改”内核源码包/drivers/net/wireless”路径下的Kconfig，底行增加：
+source &ldquo;drivers/net/wireless/8811AU/Kconfig”</p>
+
+<p>4、修改”内核源码包/drivers/net/wireless”路径下的makefile，底行增加：
+obj-$(CONFIG_8811AU) +=8811AU/</p>
+
+<p>5、到内核源码包位置make menuconfig，选中Device drivers-&gt;network device support-&gt;wireless lan-&gt;8811AU USB wifi选为*</p>
+
+<p>6、保存 make之后。
+注意：修改完内核后需要重新编译内核，若是增添了内核模块，需要重新编译内核模块，放到系统指定位置下。</p>
+
+<h1 id="系统环境配置">系统环境配置</h1>
+
+<p>此处环境配置指的是本项目所需要用到的各个软件环境以及所需要的库的配置，包括：
+<strong>Opencv，Ros，Optitrack，Eigen，mavros</strong>等。</p>
+
+<h2 id="opencv">Opencv</h2>
+
+<hr />
+
+<h3 id="１-安装交叉编译工具链-安装过程如下">１.安装交叉编译工具链，安装过程如下：</h3>
+
+<h4 id="例-安装版本为gcc-linaro-arm-linux-gnueabihf-4-8-2014-04-linux">例：安装版本为gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux</h4>
+
+<hr />
+
+<ul>
+<li><p>网上获取gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux.tar，在所在目录进行解压，使用命令行</p>
+
+<pre><code>sudo tar -xvf gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux.tar
+</code></pre></li>
+
+<li><p>在/usr/local下新建一个文件夹，使用命令行</p>
+
+<pre><code>sudo mkdir arm-toolchain
+</code></pre></li>
+
+<li><p>将刚才解压后得到的gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux文件复制到arm-toolchain里，使用命令行</p>
+
+<pre><code>sudo cp -r /home/wl/下载/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux /usr/local/arm-toolchain
+</code></pre></li>
+
+<li><p>完成之后，需要设置环境变量，使用命令行打开/etc/profile 或 /etc/bash.bashrc
+sudo gedit /etc/profile
+在文件的末尾加入下面这一行：</p>
+
+<pre><code>Export PATH=$PATH:/usr/local/arm-toolchain/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
+</code></pre></li>
+
+<li><p>保存过后使用如下命令行使其立即生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre></li>
+
+<li><p>最后通过如下方式验证是否安装成功：arm-linux-gnueabi-gcc –v，出现版本信息说明验证安装成功</p></li>
+</ul>
+
+<h3 id="2-安装cmake-安装过程如下">2.安装Cmake，安装过程如下：</h3>
+
+<p>使用如下命令行：</p>
+
+<pre><code>sudo apt-get install cmake  即完成安装。
+</code></pre>
+
+<h3 id="3-opencv的编译">3.Opencv的编译：</h3>
+
+<h4 id="1-打开cmake">(1)打开Cmake：</h4>
+
+<ul>
+<li><p>sudo cmake-gui,选择要编译的源文件和编译之后存放的路径,本人选择的路径分别为：/home/wl/下载/opencv-3.2.0，/home/wl/arm-linux-opencv-binaries，arm-linux-opencv-binaries为新建的文件夹。</p>
+
+<h4 id="2-然后配置编译工具">(2)然后配置编译工具。</h4></li>
+
+<li><p>Specify the generator for this project:第一项选择Unix Makefile,勾选第四项Specify options for cross-compiling。</p></li>
+
+<li><p>Sext后，Target System为linux,Compilers选项下的C和C++分别对应安装的gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux路径下的arm-linux-gnueabihf-gcc和arm-linux-gnueabihf-g++(在bin目录中) ,Target Root选项为gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux的安装目录，不用带/bin.</p>
+
+<h4 id="3-config">(3)Config:</h4></li>
+
+<li><p>点击finish之后会出现第一次Configure的结果，可能出现各种错误，比如说<em>ERROR in configuration process,project files may be invalid</em> 这个错误可以无视掉，直接点击OK 。</p></li>
+
+<li><p>然后就是修改红色区域的部分值，去掉某些值：
+WITH_OPENCL、WITH_TIFF　BUILD_OPENEXR、WITH_OPENEXR、WITH_CUDA
+并修改CMAKE_INSTALL_PREFIX的值为自己想要的路径，这里我设置为了/usr/local/arm-opencv/。</p></li>
+
+<li><p>然后打开/home/wl/arm-linux-opencv-binaries目录下的CMakeCache.txt文件修改里边的两个值：
+CMAKE_EXE_LINKER_FLAGS原来为空，加上-lpthread -lrt -ldl
+CMAKE_INSTALL_PREFIX:PATH= XXXXXX(安装路径) 见上。
+然后就可以执行sudo make,注意这里要在编译生成文件目录下操作，这里我的路径为/home/wl/arm-linux-opencv-binaries</p></li>
+</ul>
+
+<h4 id="编译过程中可能出现如下问题"><strong>编译过程中可能出现如下问题</strong>：</h4>
+
+<ul>
+<li><p>gnueabihf/bin/ld:　../../3rdparty/lib/libzlib.a(crc32.obj):　relocation　R_ARM_THM_MOVW_ABS_NC　against　`a　local　symbol&rsquo;can　ot　be　used　whenmaking　a　shared　object;　recompile　with　-fPIC</p></li>
+
+<li><p>注意到其中的libzlib.a文件，我们需要在你指定的二进制文件输出路径的：3rdparty/zlib/CMakeFiles/zlib.dir/flags.make文件中，将C_FLAGS　=　　-fsigned-char　-W　-Wall　-Werror替换为
+C_FLAGS =    -fsigned-char -O3 -fPIC  -W -Wall -Werror
+就行了，在这之后或者之前都可能出现同样情况的错误，可能出错的不是这个文件，但是是同类型文件，你只需要找到对应文件按照上面修改就行了。</p></li>
+
+<li><p>后面需要重新到config步骤，修改CMakeCache.txt文件修改里边的两个值，具体如上，一直到不会出现该错误即可，最后make完成。</p></li>
+</ul>
+
+<h4 id="5-最后执行">(5)最后执行　</h4>
+
+<pre><code>sudo make install。
+</code></pre>
+
+<h3 id="4-配置编译环境">4.配置编译环境：</h3>
+
+<p>在此先做说明：</p>
+
+<ul>
+<li><p>编译文件存放目录：/home/wl/arm-linux-opencv-binaries</p></li>
+
+<li><p>编译生成的头文件存放目录：（即CMAKE_INSTALL_PREFIX的值）/usr/local/arm-opencv</p></li>
+
+<li><p>进行编辑库连接配置文件，</p>
+
+<p>cd /etc/ld.so.conf.d
+sudo gedit opencv.conf
+添加如下内容：</p>
+
+<pre><code>/usr/local/arm-opencv/lib
+</code></pre></li>
+
+<li><p>然后 ldconfig使生效
+添加环境变量</p>
+
+<pre><code>sudo gedit /etc/bash.bashrc   
+</code></pre>
+
+<p>在最后添加</p>
+
+<pre><code>PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opencv-arm/lib/pkgconfig
+export PKG_CONFIG_PATH
+</code></pre></li>
+
+<li></li>
+
+<li><p>编译测试：假如你已经有一个main.cpp函数文件了，进入其 所在的文件夹
+执行下面的命令进行编译：</p>
+
+<pre><code>arm-linux-gnueabihf-g++ main.cpp -o hh  -lpthread -lrt `pkg-config --libs --cflags opencv`　　
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>其中arm-linux-gnueabihf-g++是编译用的编译器；
+main.cpp为要进行编译的程序；hh为编译之后生成的可执行二进制程序，可以任意命名，过程中可能报错找不到opencv.pc，那么我们将二进制文件中的unix-install中的openv.pc文件复制到/usr/lib/pkgconfig中即可。</p>
+</blockquote>
+
+<p>-编译成功之后，就会发现生成了一个名为hh的二进制文件，至此，在电脑上的OpenCV交叉编译已全部完成！剩下的工作就是把编译好的OpenCV库拷到ARM平台中。</p>
+
+<h3 id="5-移植到arm平台上">5.移植到arm平台上</h3>
+
+<p>-把arm-opencv拷贝到ARM中的/usr/local文件夹下,把arm-linux-opencv-binaries拷贝到ARM中的/home/wl文件夹下。之后验证的方法和上一步一样。</p>
+
+<p>最后整个Opencv的移植就完成了！！！</p>
+
+<h2 id="ros">ROS</h2>
+
+<h3 id="1-首先用minicom连接开发板-没有问题">1.  首先用minicom连接开发板，没有问题。</h3>
+
+<p>使用的命令行：</p>
+
+<pre><code>sudo minicom
+</code></pre>
+
+<h3 id="2-接着在开发板上输入命令行添加软件源到sources-list">2.  接着在开发板上输入命令行添加软件源到sources.list</h3>
+
+<p>使用的命令行：</p>
+
+<pre><code>$sudo sh -c 'echo &quot;deb http://packages.ros.org/ros/ubuntu trusty main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list'
+</code></pre>
+
+<h3 id="3-然后设置密钥">3.  然后设置密钥</h3>
+
+<p>使用的命令行:</p>
+
+<pre><code>$ wget http://packages.ros.org/ros.key -O - | sudo apt-key add –
+</code></pre>
+
+<h3 id="4-接下来输入">4.  接下来输入</h3>
+
+<pre><code>$ sudo apt-get update
+</code></pre>
+
+<h3 id="5-然后输入">5.  然后输入</h3>
+
+<pre><code> $ sudo apt-get install ros-indigo-base安装ros
+</code></pre>
+
+<h3 id="6-接下来初始化ros-依次输入">6.  接下来初始化ros：依次输入</h3>
+
+<pre><code> $ sudo rosdep init
+ $ rosdep update
+</code></pre>
+
+<h3 id="7-最后配置环境">7.  最后配置环境：</h3>
+
+<p>输入：</p>
+
+<pre><code>$ echo &quot;source /opt/ros/indigo/setup.bash&quot; &gt;&gt; ~/.bashrc
+</code></pre>
+
+<p>使环境变量设置立即生效输入：</p>
+
+<pre><code>$ source ~/.bashrc
+</code></pre>
+
+<h5 id="可能遇到的问题">可能遇到的问题</h5>
+
+<h4 id="font-size-4-1-命令行长度的问题-在添加软件源和设置密钥输入命令行时-由于minicom的bug会让命令行输入到一定长度时转而从气势位置输入让前面的代码消失-但这个不影响代码的效果-与后面的bug也没有关系"><font size="4">  1.    命令行长度的问题：在添加软件源和设置密钥输入命令行时，由于minicom的bug会让命令行输入到一定长度时转而从气势位置输入让前面的代码消失，但这个不影响代码的效果，与后面的bug也没有关系。</h4>
+
+<h4 id="font-size-4-2-update时会出现一些网站hit不了-只需要多试几次至成功即可"><font size="4">  2.   Update时会出现一些网站hit不了，只需要多试几次至成功即可。</h4>
+
+<h4 id="font-size-4-3-install时如果安装有full版本可能会无法locate-所以不要安装full版本-用base版本即可"><font size="4">  3.   Install时如果安装有full版本可能会无法locate，所以不要安装full版本，用base版本即可。</h4>
+
+<h4 id="font-size-4-4-install时要注意ros支持的ubuntu版本-如indigo时14-04-而16-04则需要别的版本"><font size="4">  4.   Install时要注意ros支持的ubuntu版本，如indigo时14.04，而16.04则需要别的版本。</h4>
+
+<h4 id="font-size-4-5-install时可能会有一些目标get不到-在install一次即可"><font size="4">  5.   Install时可能会有一些目标get不到，在install一次即可。</h4>
+
+<h4 id="font-size-4-6-如果初始化失败可能时前面的install没有成功-回头看一下再install直至成功"><font size="4">  6.   如果初始化失败可能时前面的install没有成功，回头看一下再install直至成功。</h4>
+
+<h1 id="optitrack">Optitrack</h1>
+
+<hr />
+
+<p>从github上下载压缩包：</p>
+
+<h2 id="1-进入板卡-在-home目录下创建一个名为catkin-make的文件夹">1.  进入板卡，在/home目录下创建一个名为catkin_make的文件夹：</h2>
+
+<p>cd /home
+mkdir catkin_make</p>
+
+<p>再在该文件夹下创建一个名为/src的文件夹：
+cd ./catkin_make
+mkdir src</p>
+
+<h2 id="2-将压缩包解压后的源文件放到刚刚创建的文件夹-src下">2.  将压缩包解压后的源文件放到刚刚创建的文件夹/src下:</h2>
+
+<p>cp -r 解压后文件所在位置 /home/src</p>
+
+<h2 id="3-在catkin-make文件夹底下对源码进行编译">3.  在catkin_make文件夹底下对源码进行编译：</h2>
+
+<p>cd ..
+catkin_make
+至此，该库已编译完成！</p>
+
+<h1 id="eigen-mavros">Eigen，mavros</h1>
+
+<hr />
+
+<h2 id="1-从网上下载源码-然后解压">1.  从网上下载源码，然后解压</h2>
+
+<h2 id="2-在解压的目录-对其进行编译">2.  在解压的目录，对其进行编译</h2>
+
+<pre><code>make
+make install
+</code></pre>
+
+<h1 id="交叉编译器">交叉编译器</h1>
+
+<h2 id="1-交叉编译器简介">1.   交叉编译器简介</h2>
+
+<p>在一种计算机环境中运行的编译程序，能编译出在另外一种环境下运行的代码，这个编译过程就叫交叉编译.简单地说，就是在一个平台上生成另一个平台上的可执行代码.</p>
+
+<h2 id="2-体系结构与操作系统">2.   体系结构与操作系统</h2>
+
+<h3 id="2-1使用的体系结构有-arm结构-x86结构等">2.1使用的体系结构有:ARM结构、x86结构等</h3>
+
+<h3 id="2-2使用的操作系统有linux等">2.2使用的操作系统有linux等.</h3>
+
+<h2 id="3-安装交叉工具链">3.  安装交叉工具链</h2>
+
+<h3 id="3-1自选版本下载">3.1自选版本下载</h3>
+
+<h4 id="3-1-1工具下载">3.1.1工具下载:</h4>
+
+<p>从linaro的网站下载预编译包 ，以  gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux 为例</p>
+
+<pre><code>    解压 gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux.tar. xz
+</code></pre>
+
+<h4 id="3-1-2解压方法">3.1.2解压方法：</h4>
+
+<p>解压tar.xz文件：先 xz  -d  xxx.tar.xz 将 xxx.tar.xz解压成 xxx.tar,然后再用 tar xvf  xxx.tar来解包</p>
+
+<p>另外解压方式：</p>
+
+<pre><code>    tar –xvf file.tar //解压 tar包
+
+    tar -xzvf file.tar.gz //解压tar.gz
+
+    tar -xjvf file.tar.bz2   //解压 tar.bz2
+</code></pre>
+
+<h4 id="易错点">易错点：</h4>
+
+<pre><code>    apt-get install g++-arm-linux-gnueabihf 
+</code></pre>
+
+<p>获取的是最新版本的编译工具而交叉编译工具版本号一定要和你选用的arm平台的版本对应，可以先确定arm平台编译工具的版本再下载对应版本到本机，不然会使得本机交叉编译的文件无法在arm平台运行。</p>
+
+<h4 id="3-1-3环境变量设置-设置环境变量使得编译器指向你所下载的工具链">3.1.3环境变量设置（设置环境变量使得编译器指向你所下载的工具链）</h4>
+
+<pre><code>    ~$ sudo gedit .bashrc
+</code></pre>
+
+<p>打开文件后，在最后俩行加上编译工具链的路径：</p>
+
+<pre><code>PATH=$PATH:/home /下载/gcc-linaro-arm-linux-gnueabihf-4.8-2013.10_linux/bin 
+export PATH
+</code></pre>
+
+<p>具体格式依据：
+     PATH=$PATH:/（你所解压之后 的工具链所在的路径）/bin
+     export PATH</p>
+
+<h4 id="易错点-1">易错点：</h4>
+
+<p>第一行的$PATH后面是英文冒号，$PATH之前的等号左右俩侧不要存在空格，不然报错</p>
+
+<h4 id="3-1-4使环境变量-生效">3.1.4使环境变量 生效</h4>
+
+<pre><code>~$ source .bashrc
+</code></pre>
+
+<h4 id="3-1-5-测试">3.1.5 测试</h4>
+
+<pre><code>~$ arm-linux-gnueabihf-gcc -v
+</code></pre>
+
+<h4 id="报错">报错：</h4>
+
+<pre><code>arm-linux-gnueabihf-gcc: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
+</code></pre>
+
+<h4 id="原因-64位的系统-缺少-lib32stdc-6这个包">原因：64位的系统，缺少 lib32stdc++6这个包</h4>
+
+<h4 id="解决-sudo-apt-get-install-lib32stdc-6">解决：~$ sudo apt-get install lib32stdc++6</h4>
+
+<p>再测试　~$ arm-linux-gnueabihf-gcc -v      出现相应版本号</p>
+
+<h3 id="3-2默认版本下载">3.2默认版本下载</h3>
+
+<p>采用指令默认下载相应工具链</p>
+
+<pre><code>sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+</code></pre>
+
+<h2 id="4-交叉编译compute-library-examples">4.   交叉编译Compute Library examples</h2>
+
+<h3 id="4-1官网下载并且编译computer-library文件">4.1官网下载并且编译Computer library文件</h3>
+
+<h4 id="4-1-1安装git工具">4.1.1安装git工具：</h4>
+
+<pre><code>sudo apt-get install git
+</code></pre>
+
+<h4 id="4-1-2下载computer-library文件">4.1.2下载Computer library文件：</h4>
+
+<pre><code>git clone https://github.com/Arm-software/ComputeLibrary.git
+</code></pre>
+
+<h4 id="4-1-3安装scons工具">4.1.3安装scons工具：</h4>
+
+<pre><code>$sudo apt-get install scons
+</code></pre>
+
+<h4 id="4-1-4在该路径下打开终端-用scons命令对computer-library进行编译">4.1.4在该路径下打开终端，用scons命令对Computer library进行编译：</h4>
+
+<blockquote>
+<p>（<a href="https://arm-software.github.io/ComputeLibrary/v17.04/index.xhtml#S3_2_2_examples）">https://arm-software.github.io/ComputeLibrary/v17.04/index.xhtml#S3_2_2_examples）</a></p>
+</blockquote>
+
+<pre><code>指令：$scons Werror=1 -j8 debug=0 asserts=1 neon=0 opencl=1 embed_kernels=1 os=linux arch=armv7a
+</code></pre>
+
+<h4 id="参数注释">参数注释：</h4>
+
+<p>启用_debug = 1_，并且使用符号构建库同时不启用优化
+使用_debug = 0_和_asserts=1_：启用优化并删除符号</p>
+
+<p>如果自己下载的工具链与官网的工具链相同<em>Werror=1</em>,
+如果使用不同的编译器版本<em>Werror=0</em></p>
+
+<p>架构：x86目标只能与_neon = 0_和_opencl = 1_一起使用
+arch是你使用的arm平台</p>
+
+<h3 id="4-2单独编译cl-convolution和neon-convolution俩个examples">4.2单独编译cl_convolution和neon_convolution俩个examples</h3>
+
+<p>下载官网上库已经编译好的arm_compute-v17.03.1-bin（以17.03.1为例）文件</p>
+
+<p>在该路径下打开终端编译:</p>
+
+<h4 id="4-2-1cl-convolution">4.2.1cl_convolution</h4>
+
+<pre><code>~$arm-linux-gnueabihf-g++ examples/cl_convolution.cpp test_helpers/Utils.cpp -I. -Iinclude -std=c++11 -mfpu=neon -L. -larm_compute -lOpenCL -o cl_convolution
+</code></pre>
+
+<h4 id="4-2-2neon-convolution">4.2.2neon_convolution</h4>
+
+<pre><code>arm-linux-gnueabihf-g++ examples/cl_convolution.cpp test_helpers/Utils.cpp -I. -Iinclude -std=c++11 -mfpu=neon -L/home/dengkai/下载/arm_compute-v17.03.1-bin/lib/linux-armv7a-neon-cl -larm_compute -L/home/dengkai/下载/arm_compute-v17.03.1-bin/-lOpenCL -o cl_convolution
+</code></pre>
+
+<p>报错:arm_compute not found
+            opencl not found</p>
+
+<p>原因：armcomputer和opencl俩个库路径不对</p>
+
+<p>解决：找到这俩个库的位置，具体参照以下代码</p>
+
+<pre><code> arm-linux-gnueabihf-g++ examples/neon_convolution.cpp test_helpers/Utils.cpp -I. -Iinclude -std=c++11 -mfpu=neon -L/home/dengkai/下载/arm_compute-v17.03.1-bin/lib/linux-armv7a-neon -larm_compute -L/home/dengkai/下载/arm_compute-v17.03.1-bin/-lOpenCL -o neon_convolution
+</code></pre>
+
+<p>也可以在arm_compute-v17.03.1-bin目录下获得编译好的neon_convolution文件</p>
+
+<pre><code>gcc examples/neon_convolution.cpp utils/Utils.cpp -I. -Iinclude -std=c++11 -mfpu=neon -larm_compute -larm_compute_core -o neon_convolution
+</code></pre>
+
+<p>注意： linux-armv7a-neon-cl和 linux-armv7a-neon略有不同记得修改</p>
+
+<h2 id="5-传输至板卡运行">5.   传输至板卡运行</h2>
+
+<h3 id="5-1电脑pc终端与板卡-rk3288-minicom连接">5.1电脑pc终端与板卡（rk3288）minicom连接</h3>
+
+<pre><code>~$sudo minicom  之后输入本机密码修改
+~$minicom -s
+</code></pre>
+
+<h4 id="5-1-1serial-port-setup选项配置">5.1.1Serial port setup选项配置</h4>
+
+<p>选择配置项，这里我们主要配置Serial port setup选项，下面是基本配置</p>
+
+<pre><code>≠ A -    Serial Device      : /dev/ttyS
+≠ B - Lockfile Location     : /var/lock
+≠ C -   Callin Program      :
+≠ D -  Callout Program      :
+≠ E -    Bps/Par/Bits       : 115200 8N1
+≠ F - Hardware Flow Control : No
+≠ G - Software Flow Control : No
+≠    Change which setting?
++-----------------------------------------------------------------------+
+</code></pre>
+
+<p>A选项Serial Device 根据我们的串口来，如果是COM1我们就选择ttyS0（不过后面说的出错也有例外），COM2口选择ttyS1等等</p>
+
+<p>F选项一定要改为NO，不然终端只能打印从下位机发过来的信息，而不能接受键盘的输入</p>
+
+<h4 id="5-1-2使用minicom">5.1.2使用minicom</h4>
+
+<h4 id="报错及可能出现的问题">报错及可能出现的问题：</h4>
+
+<p>串口被锁（Device /dev/ttyS0 is locked）
+解决：</p>
+
+<pre><code>~$ ls /var/lock
+LCK..ttyS0  subsys
+:~$ kill 0
+~$ ls /var/lock
+subsys
+~$ sudo minicom
+Welcome to minicom 2.3
+</code></pre>
+
+<h3 id="5-2电脑pc终端与arm平台ssh连接">5.2电脑pc终端与arm平台ssh连接</h3>
+
+<h4 id="5-2-1板卡应该与pc在同一个局域网-检查是否联通-可以用ping指令">5.2.1板卡应该与pc在同一个局域网，检查是否联通，可以用ping指令</h4>
+
+<pre><code>~$ ssh root@IP
+</code></pre>
+
+<p>例如</p>
+
+<pre><code>~$ ssh root@192.168.1.153
+</code></pre>
+
+<h4 id="5-2-2报错">5.2.2报错：</h4>
+
+<pre><code>ssh: connect to host 192.168.1.153 port 22: No route to host
+</code></pre>
+
+<p>原因：ip地址不对</p>
+
+<p>解决：</p>
+
+<p>a.打开minicom端，输入</p>
+
+<pre><code>~$ ifconfig
+</code></pre>
+
+<p>获得ip地址（务必在进入minicom中输入该命令，在电脑pc下输入该命令获得的ip不对）</p>
+
+<p>b.在电脑终端输入
+    ~$ ssh root@IP
+之后提示输入密码，此处密码为板卡默认密码，官网上有写（我们平台是mqmaker）</p>
+
+<h4 id="5-2-3修改密码-进入minicom-sudo-minicom">5.2.3修改密码:进入minicom(sudo minicom)</h4>
+
+<p>输入以下指令：</p>
+
+<pre><code>root@mqmaker:~# passwd root 
+Enter new UNIX password:  
+Retype new UNIX password:  
+passwd: password updated successfully
+</code></pre>
+
+<h3 id="5-3-ssh链接平台以后传输文件">5.3 ssh链接平台以后传输文件</h3>
+
+<pre><code>scp /home/dengkai/lingd/upload/cl_convolution.o  root@192.168.1.153:/home/dk
+scp /home/dengkai/lingd/upload/neon_convolution.o  root@192.168.1.153:/home/dk
+</code></pre>
+
+<h2 id="6-板卡执行交叉编译完的文件">6.   板卡执行交叉编译完的文件</h2>
+
+<h3 id="6-1运行可执行文件">6.1运行可执行文件</h3>
+
+<pre><code>~#./cl_convolution
+</code></pre>
+
+<h4 id="6-1-1报错">6.1.1报错：</h4>
+
+<pre><code>~#./cl_convolution
+terminate called after throwing an instance of 'cl::Error'
+what():  empty
+libarm_compute.so not found
+</code></pre>
+
+<p>解决：</p>
+
+<pre><code>scp -r /home/下载/arm_compute-v17.03.1-bin/lib root@192.168.1.153:/usr/local/lib
+</code></pre>
+
+<p>将需要用到的库放至arm对应文件夹下</p>
+
+<pre><code>cl_convolution: ELF 32-bit LSB  executable, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 3.2.0, BuildID[sha1]=e2d66d68a52b4d09a0a934980b934c3a79f0b8c7, not stripped
+./cl_convolution: /usr/lib/arm-linux-gnueabihf/libstdc++.so.6: version `GLIBCXX_3.4.20' not found ( required by ./cl_convolution)
+</code></pre>
+
+<h3 id="6-2运行结果">6.2运行结果</h3>
+
+<p>例子运行正确则返回</p>
+
+<pre><code>&quot;Test passed&quot;
+</code></pre>
+
+<h2 id="7-本地编译">7.   本地编译</h2>
+
+<h3 id="7-1配置工具git-g-scons">7.1配置工具git、g++、scons：</h3>
+
+<pre><code>sudo apt-get install g++ git scons 
+</code></pre>
+
+<h3 id="7-2下载computelibrary">7.2下载ComputeLibrary</h3>
+
+<pre><code>git clone https://github.com/Arm-software/ComputeLibrary.git 
+</code></pre>
+
+<h3 id="7-3本地编译">7.3本地编译：</h3>
+
+<pre><code>cd ComputeLibrary 
+scons Werror=1 debug=0 asserts=0 neon=1 opencl=0 examples=1 build=native -j`
+</code></pre>
+
+<h1 id="motive配置">motive配置</h1>
+
+<h2 id="1-标定相关文档">1.标定相关文档</h2>
+
+<h3 id="1-1保存工程">1.1保存工程</h3>
+
+<p>打开Motive软件，窗口显示如下界面</p>
+
+<p><img src="1.jpg" alt="" /></p>
+
+<p>选择右上方区域Calibration目录下的Mask Visible，出现保存对话框，选择Yes保存到相应位置。</p>
+
+<p><img src="2.jpg" alt="" /></p>
+
+<h3 id="1-2确定摄像头位置">1.2确定摄像头位置</h3>
+
+<p>点击Calibration下第二个选项Start Wanding，界面变为如下形式，等待采样标志点。</p>
+
+<p><img src="3.jpg" alt="" /></p>
+
+<p>将带三个小球的长杆拿进工作区，进行各种无规则运动，以取得尽可能多的采样点，直至右下角区域背景由白色变为浅绿色（如下图所示），点击Calculate进行计算。</p>
+
+<p><img src="4.jpg" alt="" /></p>
+
+<h3 id="1-3确定坐标系">1.3确定坐标系</h3>
+
+<p>上述步骤能够得到六个摄像头之间的相对位置，但其坐标系仍与实际空间不符。</br>
+此后，将三角水平标定物放入网中，根据所需坐标系进行放置。放置好后，点击右上角区域Ground Plane下的Set Ground Plane，完成标定。</p>
+
+<p><img src="5.jpg" alt="" /></p>
+
+<h3 id="1-4建立刚体">1.4建立刚体</h3>
+
+<p>将飞机放入工作区域。选中摄像头拍摄到飞机上的所有标定点，右键选择Rigid Body下的Create From Selected Markers，建立刚体。</p>
+
+<p><img src="11.png" alt="" /></p>
+
+<h3 id="1-5设置motive">1.5设置Motive</h3>
+
+<p>选择View下的Rigid Body Properties</p>
+
+<p><img src="6.jpg" alt="" /></p>
+
+<p>然后再选择View下的Data Streaming</p>
+
+<p><img src="7.jpg" alt="" /></p>
+
+<p>在Data Streaming中选择Local Interface下拉选项中的本地接口</p>
+
+<p><img src="8.jpg" alt="" /></p>
+
+<p>再将Stream Rigid Bodies设置成True</p>
+
+<p><img src="9.jpg" alt="" /></p>
+
+<p>最后将Multicast Interface改成224.0.0.1</p>
+
+<p><img src="10.jpg" alt="" /></p>
+
+<h2 id="2-配置">2.配置</h2>
+
+<p>(1)在第一个命令行窗口输入以下命令行：</p>
+
+<pre><code>ssh root@192.168.31.34
+</code></pre>
+
+<p></br> 输入密码（如mqmaker):</p>
+
+<pre><code>mqmaker
+</code></pre>
+
+<p></br> 输入以下命令：</p>
+
+<pre><code>roslaunch mavros px4.launch
+</code></pre>
+
+<p>(2)打开一个新命令行窗口，输入以下命令行：</p>
+
+<pre><code>ssh root@192.168.31.34
+</code></pre>
+
+<p></br> 输入密码（如mqmaker):</p>
+
+<pre><code>mqmaker
+</code></pre>
+
+<p></br> 输入以下命令行：
+</br>
+<code>ls</code>
+</br>
+<code>cd /home/</code>
+</br>
+<code>cd /home/catkin make/</code>
+</br>
+<code>source devel/setup.bash</code>
+</br>
+<code>roslaunch mocap optitrack mocap launch</code></p>
+
+<p>(3)显示图形窗口
+</br>
+<code>rviz rviz</code></p>
+
+<p>(4)查看参数（如LPE_PN_V)
+</br>
+<code>rosrun mavros mavparam get LPE_PN_V</code></p>
+
+<p>(5)修改参数（如LPE_PN_V)
+</br>
+<code>rosrun mavros mavparam set LPE_PN_V number</code></p>
+
+<h1 id="license">license</h1>
+
+<p><a href="https://creativecommons.org/licenses/by/4.0/deed.zh">License BY CC 4.0</a></p>
+    
+        </div>
+    </section>
+
+    <footer class="post-full-footer">
+      <section class="author-card">
+        <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+        <section class="author-card-content">
+            <h4 class="author-card-name"><a href="http://amazething.github.io/">AMaze</a></h4>
+                <p>AMaze</p>
+        </section>
+      </section>
+    </footer>
+</article>
+    
+    
+    
+
+
+  </div>
+</main>
+
+
+<aside class="read-next outer">
+  <div class="inner">
+    <div class="read-next-feed">      
+      
+<article class="read-next-card" 
+            style="background-image: url(http://amazething.github.io/img/blog-cover.jpg);" >
+    <header class="read-next-card-header">
+        <small class="read-next-card-header-sitetitle">&mdash; AMaze &mdash;</small>
+        
+    </header>
+    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+    </div>
+
+    <div class="read-next-card-content">
+      
+        <ul>
+          <li><a href="http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/">AMaze团队</a></li>            
+        
+                      
+        
+          <li><a href="http://amazething.github.io/post/innovate/">华电60周年校庆编队报导</a></li>            
+        
+          <li><a href="http://amazething.github.io/post/amaze/">AMaze简介</a></li>            
+        
+          <li><a href="http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/">Auterion在线讲座公开课</a></li>            
+        </ul>
+    </div>
+    <footer class="read-next-card-footer">
+      
+    </footer>
+</article>
+
+
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="http://amazething.github.io/post/formation/">
+      <div class="post-card-image" style="background-image: url(http://amazething.github.io/img/view.bmp)"></div>
+    </a>
+    
+
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="http://amazething.github.io/post/formation/">
+          <header class="post-card-header">
+              
+              <h2 class="post-card-title">无人机编队</h2>
+          </header>
+          <section class="post-card-excerpt">
+               
+                <p>无人机编队相关知识，共三部分</p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+          <span class="post-card-author"><a href="http://amazething.github.io/">AMaze</a></span>
+      </footer>
+    </div>
+</article>
+      
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/">
+      <div class="post-card-image" style="background-image: url(http://amazething.github.io/img/screen.png)"></div>
+    </a>
+    
+
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #innovate  </span>
+              
+              <h2 class="post-card-title">Auterion在线讲座公开课</h2>
+          </header>
+          <section class="post-card-excerpt">
+               
+                <p>Auterion在线讲座公开课，由Amaze贡献中文字幕</p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+          <span class="post-card-author"><a href="http://amazething.github.io/">AMaze</a></span>
+      </footer>
+    </div>
+</article>
+      
+    </div>
+  </div>
+</aside>
+
+<div class="floating-header">
+  <div class="floating-header-logo">
+    <a href="http://amazething.github.io/">
+      <img src="http://amazething.github.io/logo.png" alt=""/>
+      <span></span>
+    </a>
+  </div>
+  <span class="floating-header-divider">&mdash;</span>
+  <div class="floating-header-title">机器人导航</div>
+  <progress class="progress" value="0">
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+  </progress>
+</div>
+
+
+
+<footer class="site-footer outer">
+  <div class="site-footer-content inner">
+    <section class="copyright" style="line-height: 1.3em;">
+      <a href="http://amazething.github.io/">AMaze</a> © 2018 <br>
+      <span style="font-size: 0.8em; color: #555;"></span>
+    </section>
+    <nav class="site-footer-nav">
+        
+        <a href="https://github.com/AMaze" target="_blank" rel="noopener">Github</a>
+    </nav>  
+  </div>
+</footer>
+
+</div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://amazething.github.io/js/jquery.fitvids.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script>
+
+
+
+
+
+$(document).ready(function () {
+    
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+</body></html>

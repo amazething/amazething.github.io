@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en-US" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>无人机编队 &middot; </title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://amazething.github.io/favicon.ico" />
+    <link rel="canonical" href="http://amazething.github.io/post/formation/" />
+
+     <meta name="description" content="无人机编队相关知识，共三部分" /> 
+
+    <meta name="generator" content="Hugo 0.51" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://amazething.github.io/built/screen.css" /> 
+    <link rel="stylesheet" type="text/css" href="http://amazething.github.io/css/casper-two.css" /> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
+    
+
+     
+
+</head>
+
+
+<body class="post-template">
+  <div class="site-wrapper"> 
+
+<header class="site-header outer">
+  <div class="inner">
+    <nav class="site-nav">
+      <div class="site-nav-left">
+        <a class="site-nav-logo" href="#"><img src="http://amazething.github.io/logo.png" alt="AMaze" /></a>
+
+        <ul class="nav" role="menu">
+        
+        
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/">主页</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="https://amazeflydocs.readthedocs.io/en/latest/">无人机编队</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="https://amazenavdocs.readthedocs.io/en/latest/">机器人导航</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/tags/innovate/">创新展示</a>
+            </li>
+        
+            <li class="" role="menuitem">
+              <a href="http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/">团队成员</a>
+            </li>
+        
+      </ul></div>
+
+      <div class="site-nav-right">
+        <div class="social-links">
+
+                    <a class="social-link" href="https://github.com/AMaze" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>  
+            
+      </div>
+
+    </nav>  
+
+  </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+  <div class="inner">
+    
+      <article class="post-full post"> 
+    <header class="post-full-header">
+        <section class="post-full-meta">
+            <time class="post-full-meta-date" datetime="2018-11-12">12 November 2018</time>
+        </section>
+        <h1 class="post-full-title">无人机编队</h1>
+    </header>
+    
+    <figure class="post-full-image" style="background-image: url(http://amazething.github.io/img/view.bmp)">
+    </figure>
+
+    <section class="post-full-content">
+        <div class="kg-card-markdown">
+        
+
+<h4 id="目录">目录</h4>
+
+<ul>
+<li><p><a href="#组装一架满足编队需求的飞机">一、组装一架满足编队需求的飞机</a></p></li>
+
+<li><p><a href="#软件及嵌入式系统配置">二、软件及嵌入式系统配置</a></p></li>
+
+<li><p><a href="#编队程序解析">三、编队程序解析</a></p></li>
+
+<li><p><a href="#license">四、许可</a></p></li>
+</ul>
+
+<h1 id="组装一架满足编队需求的飞机">组装一架满足编队需求的飞机</h1>
+
+<h2 id="系统需求">系统需求</h2>
+
+<h3 id="无人机">无人机</h3>
+
+<p>1．使用Pixhawk作为其飞行控制器的无人机。</p>
+
+<p>2．一个微型车载Linux计算机。(例如:树莓派)</p>
+
+<p>3．带有USB适配器的XBee模块。(例如:XBee S1, XBee S2C，等等)</p>
+
+<p>4．(可选)用于调试的USB- ttl适配器(例如FT232, CP2102/CP2104，不使用PL2303) 示例:XBee模块通过USB连接到RPi, RPi通过UART连接到Pixhawk。在Rpi上配置硬件UART，使其运行在921600bps 波特率，与Pixhawk系列的设置一致。(<a href="http://ardupilot.org/dev/docs/partner-computers.html">http://ardupilot.org/dev/docs/partner-computers.html</a>)</p>
+
+<h3 id="地面控制站">地面控制站</h3>
+
+<p>1．一个Linux计算机。(虚拟机也可以)</p>
+
+<p>2．带有USB适配器的XBee模块。(如XBee S1, XBee S2C等)
+通常一个多旋翼组成包括以下硬件（四轴）：</p>
+
+<p><img src="picture1.png" alt="" /></p>
+
+<h3 id="一个四轴飞行器的构成">一个四轴飞行器的构成：</h3>
+
+<ol>
+<li><p>四轴机架 X1（必须）</p></li>
+
+<li><p>动力马达 X4 （必须）</p></li>
+
+<li><p>无刷电子调速器（电调/ESC）X4 （必须）</p></li>
+
+<li><p>PixhACK v3 飞控 X1 （必须）</p></li>
+
+<li><p>CUAV GPS X1 （必须）</p></li>
+
+<li><p>无线数传 (CUAV RADIO/XBEE/XTEND/HACKLINK/WP-LINK） X1对 （必须）</p></li>
+
+<li><p>动力电池（必须）</p></li>
+
+<li><p>RC遥控器和RC接收机（必须）</p></li>
+
+<li><p>无刷云台或者相机（可选）</p></li>
+
+<li><p>超声波或者激光传感器（可选）</p></li>
+
+<li><p>光流定点传感器（可选）</p></li>
+</ol>
+
+<p><img src="picture2.jpg" alt="" /></p>
+
+<p><img src="picture3.jpg" alt="" /></p>
+
+<h3 id="支持电池类型">支持电池类型</h3>
+
+<p>使用标配的CUAV IV模块，支持标准2-6V动力电池</p>
+
+<p>IV模块支持2-6V电压、0-60A电流 实时监测</p>
+
+<p>理论上：</p>
+
+<p>需要实时控制能飞行的高度和距离:跟动力续航时间、遥控器或者数传通讯距离有关</p>
+
+<p>自主飞行的高度和距离：跟动力、续航时间有关</p>
+
+<h3 id="pixhack飞控板设备接线定义">PixHack飞控板设备接线定义</h3>
+
+<p>每种飞行器的电动机顺序 (里边的数字对应的飞控板的PWM输出端口)</p>
+
+<p>CW 顺时针螺旋桨，绿色图示</p>
+
+<p>CCW逆时针螺旋桨 ，蓝色图示</p>
+
+<p>注意：错误的接线和固件，都会导致起飞就翻车，或者严重往一边倾斜，需要谨慎安装和选择固件
+<img src="picture4.png" alt="" /></p>
+
+<h3 id="四轴飞行器">四轴飞行器：</h3>
+
+<p><img src="picture5.png" alt="" /></p>
+
+<p>这种H型机架，应该配置X型模式</p>
+
+<p><img src="picture6.png" alt="" /></p>
+
+<h1 id="软件及嵌入式系统配置">软件及嵌入式系统配置</h1>
+
+<p>飞控的Telem2接口与RaspberryPI的UART通过3-pin twisted cable连接，RaspberryPI与XBee(本项目采用XBee pro s1)通过USB cable相连。为了使三者能够正常通信，须按照以下步骤进行配置。</p>
+
+<h2 id="raspberrypi配置参考">RaspberryPI配置参考</h2>
+
+<h3 id="1-树莓派操作系统-注-本项目采用带有图形界面的ubuntu-mate-16-04-for-raspberrypi-3b-其他的os配置方法可能不同">1. 树莓派操作系统(注:本项目采用带有图形界面的Ubuntu MATE 16.04 for RaspberryPI 3B，其他的OS配置方法可能不同)</h3>
+
+<p>1) SD卡格式化软件SD Formatter 4.0 for SD/SDHC/SDXC</p>
+
+<p>2) 系统镜像文件在Ubuntu mate官网上下载，写入SD卡的软件Win32 Disk Imager</p>
+
+<p>3) 安装操作系统时，勾选开机自动登录。(实现auto-login)</p>
+
+<p>4) 操作系统安装完成以后，下载文本编辑器gedit，方便后续更改配置文件。
+sudo apt install gedit</p>
+
+<h3 id="2-将uart启用为communication-interface">2. 将UART启用为communication interface。</h3>
+
+<p>1) sudo gedit /boot/cmdline.text</p>
+
+<p>2) 删除语句‘console=serial0,115200’保存并退出。</p>
+
+<h3 id="3-修改uart配置-关闭蓝牙-注-mate系统默认蓝牙占用uart">3. 修改UART配置，关闭蓝牙（注:mate系统默认蓝牙占用UART）</h3>
+
+<p>1) sudo gedit /boot/config.txt</p>
+
+<p>2) 修改init_uart_clock to 16MHz以及init_uart_baudrate to 921600并删除语句前面的注释符号#。（注:飞控Telem2波特率也要相应地修改为921600）</p>
+
+<p>3) 在文本下面添加语句‘core_freq = 250’</p>
+
+<p>4) 在文本下面添加语句‘dtoverlay=pi3-disable-bt’保存并退出</p>
+
+<p>5) sudo systemctl disable hciuart
+ sudo reboot</p>
+
+<p>重启后UART配置完成</p>
+
+<h3 id="4-安装python包和linux包-注-mate系统自带python-2-7环境">4. 安装Python包和Linux包。（注:mate系统自带python 2.7环境）</h3>
+
+<p>1) sudo apt install python-pip python-dev
+sudo pip install pip dronekit xbee numpy gps pyzmq –-upgrade</p>
+
+<p>2) sudo apt install python-serial</p>
+
+<h3 id="5-开启ssh">5. 开启ssh。</h3>
+
+<p>1) sudo apt install openssh-server openssh-client</p>
+
+<p>2) sudo raspi-cofig</p>
+
+<p>3) 出现配置界面，选择‘network’。</p>
+
+<p>4) 选择‘ssh enabled’。</p>
+
+<h3 id="6-设置开机自启程序-确保auto-login已实现">6. 设置开机自启程序。(确保auto-login已实现)</h3>
+
+<p>1) sudo gedit /etc/rc.local</p>
+
+<p>2) 在文件中添加
+cd /AmazeFly
+python onboard.py -xbee /dev/ttyUSB –pix /dev/ttyAMA0，保存退出</p>
+
+<h2 id="xbee配置参考">XBee配置参考</h2>
+
+<h3 id="1-固件烧写">1. 固件烧写</h3>
+
+<p>1) 下载工具XCTU</p>
+
+<p>2) 烧写DigiMesh固件(注:推荐8073 – Xbee DiGiMesh 2.4)</p>
+
+<h3 id="2-将配置文件导入xbee">2. 将配置文件导入XBee</h3>
+
+<h1 id="编队程序解析">编队程序解析</h1>
+
+<h3 id="1-介绍">1.介绍</h3>
+
+<p>欢迎来到AmazeFly项目！AmazeFly是由华北电力大学Amaze团队设计的多无人机测试平台。</p>
+
+<p>AmazeFly的无人机采用<a href="pixhawk.org">Pixhawk</a>和<a href="www.ardupilot.org">ArduPilot</a>堆栈作为它们的低级飞行控制器，并使用<a href="python.dronekit.io">dronekit-python</a>作为高级应用程序控制。到目前为止还没有在Pixhawk和ArduPilot级别进行修改，所以这个项目完全是用Python编写的，运行在Linux环境下(例如Raspberry Pi)。</p>
+
+<p>AMazeFly的无人机使用<a href="https://www.digi.com/products/xbee-rf-solutions/2-4-ghz-modules">XBee</a>模块在无人机和地面控制站之间建立高层通信网络。</p>
+
+<h4 id="1-1引用">1.1引用</h4>
+
+<p>Quan Yuan,Flydan项目(<a href="https://github.com/WeskerYuan/flydan">https://github.com/WeskerYuan/flydan</a>)</p>
+
+<h4 id="1-2许可">1.2许可</h4>
+
+<p>AmazeFly项目是Apache 2.0下提供的开源许可。</p>
+
+<h4 id="1-3编码规范">1.3编码规范</h4>
+
+<p>项目完全是按照<a href="https://google.github.io/styleguide/pyguide.html">谷歌Python风格指南</a>的约定用Python 2.7编写的。</p>
+
+<hr />
+
+<h3 id="2-项目的主要组成部分">2.项目的主要组成部分</h3>
+
+<p><img src="picture7.png" alt="" title="picture7" /></p>
+
+<h4 id="gcs-py">gcs.py</h4>
+
+<p>用于四轴飞行器集群控制实验的地面控制站脚本。</p>
+
+<p>该脚本在装有Linux 的笔记本电脑上运行。该过程应连接一个高级XBee模块，用于无人机和地面控制站之间的相互通信。XBee模块运行在API2，转义字符模式。在编写时，应使用XBee Pro S1模块（使用DIJI Mesh固件）。有关更多详细信息，请参阅DIJI官方网站和数据表。目前，dronekit API包支持Python 2.7。然而，Ubuntu是更好的选择，因为它使用‘apt’方式来获得分布式包。</p>
+
+<h4 id="onboard-py">onboard.py</h4>
+
+<p>这是四轴飞行器集群控制实验的主要脚本。</p>
+
+<p>该脚本在板载配套计算机（例如Raspberry Pi）上运行。与此同时，
+控制通过USB或串行连接，按照MAVLink协议执行。无人驾驶飞机和地面控制站之间，应连接高级XBee模块以进行相互通信。XBee模块在API2，转义字符模式下运行。在编写时，应使用XBee Pro S1模块（使用DIJI Mesh固件）。有关更多详细信息，请参阅DIJI官方网站和数据表。目前，dronekit API包支持Python 2.7。然而，Ubuntu是更好的选择，因为它使用‘apt’方式来获得分布式包。</p>
+
+<h4 id="comm-py">comm.py：</h4>
+
+<p>通信的类和函数。</p>
+
+<p>该模块包含用于车辆或车辆和GCS之间通信的类和函数。通常，使用XBee模块让车辆交换信息。</p>
+
+<h4 id="mas-py">mas.py：</h4>
+
+<p>多代理系统控制算法模块。</p>
+
+<p>此模块包含高级代理系统控制的类和函数。这有两种主要的集群控制算法：
+2014年COLLMOT的自动推进算法和2016年的RCSNS的分散式模型预测控制。</p>
+
+<h4 id="nav-py">nav.py：</h4>
+
+<p>导航功能。</p>
+
+<p>该模块包含基本的直升机导航功能，这些功能大部分处于GUIDED模式。这些代码是参考Dronekit组编写的导航功能，借鉴修改来的。</p>
+
+<h4 id="shared-py">shared.py：</h4>
+
+<p>跨文件共享的模块。</p>
+
+<p>该模块包含许多不同的全局共享文件功能。它们是常量或预定义对象，具体取决于具体情况。某些属性在程序启动时被加载或实例化，并且在整个运行过程中都认为是常量。详细说明请参阅源代码注释。</p>
+
+<h4 id="util-py">util.py：</h4>
+
+<p>实用功能。</p>
+
+<p>该模块具有几个有用的功能，便于矢量计算和数据日志记录。大多数函数可以直接使用而不需要其他模块。</p>
+
+<h4 id="missionparser-py">missionparser.py：</h4>
+
+<p>上传任务。</p>
+
+<h4 id="pwmcontroller-py">PWMController.py：</h4>
+
+<p>打开或关闭无人机上的LED。</p>
+
+<p>Mission_txt：
+  存放任务的目录。</p>
+
+<h3 id="3-主要步骤">3.主要步骤</h3>
+
+<p>1.建立一个飞行任务，并将生成的任务TXT文件复制到无人机项目中。</p>
+
+<p>2.运行onboard.py文件。</p>
+
+<p>3.在Linux计算机运行gcs.py文件并控制无人机。</p>
+
+<h3 id="4-如何使用">4.如何使用</h3>
+
+<h4 id="1-建立一个飞行任务">1.建立一个飞行任务:</h4>
+
+<p>软件:APM Planner 2.0</p>
+
+<p>步骤:</p>
+
+<p>(1)运行该软件。</p>
+
+<p>(2)单击“FLIGHT PLAN”。</p>
+
+<p><img src="picture8.png" alt="" title="picture8" /></p>
+
+<p>(3)双击地图上的一个点(编号为0)作为“飞行原点”。</p>
+
+<p><img src="picture9.png" alt="" title="picture9" /></p>
+
+<p>(4)双击地图上的第二点(编号为1)作为“起飞点”。</p>
+
+<p><img src="picture10.png" alt="" title="picture10" /></p>
+
+<p><img src="picture11.png" alt="" title="picture11" /></p>
+
+<p>(5)继续双击一些点作为路径点。</p>
+
+<p><img src="picture12.png" alt="" title="picture12" /></p>
+
+<p>(6)可以在页面下方更改点的高度、精确度和标题。</p>
+
+<p><img src="picture13.png" alt="" title="picture13" /></p>
+
+<p>(7)将生成的TXT文件复制到mission_txt目录中，并按照无人机的序号进行划分。(TXT文件的名称必须是&rsquo;FIRST .txt&rsquo;、&rsquo;SECOND.txt&rsquo;或&rsquo;THIRD.txt&rsquo;。)</p>
+
+<p>参考:<a href="http://ardupilot.org/planner2/">http://ardupilot.org/planner2/</a></p>
+
+<h4 id="2-运行-onboard-py-文件">2.运行&rsquo;onboard.py&rsquo;文件：</h4>
+
+<p>&lsquo;onboard.py&rsquo;脚本会在无人机启动时自动运行。</p>
+
+<h4 id="3-通过-gcs-py-控制无人机">3.通过&rsquo;gcs.py&rsquo;控制无人机</h4>
+
+<p>(1)打开Linux。</p>
+
+<p>(2)将Xbee模块连接到Linux计算机。</p>
+
+<p>(3)运行终端。</p>
+
+<p>(4)使用&rsquo;cd&rsquo;命令切换到项目目录。</p>
+
+<p>(5)通过&rsquo; sudo python gcs.py -xbee /dev/ttyUSB0 &lsquo;运行的&rsquo;gcs.py&rsquo;。使用&rsquo;&ndash;help&rsquo;或参考源代码的文档字符串以获得详细的脚本参数。</p>
+
+<p>(6)控制台将开始提示一些信息。相应地输入字母以执行特定的操作。</p>
+
+<pre><code>Keylist:
+    'x': 0,  # switch the mode to auto
+    '1': 1,  # the first mission
+    '2': 2,  # the second mission
+    '3': 3,  # the third mission
+    'l': 4,  # landed
+    'd': 5,  # turn on the LED
+    'k': 6,  # kill thread and restart
+</code></pre>
+
+<p>正常起飞顺序应该是:</p>
+
+<p>1).按“1”/“2”/“3”，选择第一/第二/第三个任务。</p>
+
+<p>2).按“x”键，切换到自动模式并起飞。</p>
+
+<p>3).按“d”键，打开LED灯。</p>
+
+<p>4).按“l ”键，直接降落无人机。</p>
+
+<p>5).按“k”键，关闭线程并重新启动。</p>
+
+<h1 id="license">license</h1>
+
+<p><a href="https://creativecommons.org/licenses/by/4.0/deed.zh">License BY CC 4.0</a></p>
+    
+        </div>
+    </section>
+
+    <footer class="post-full-footer">
+      <section class="author-card">
+        <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+        <section class="author-card-content">
+            <h4 class="author-card-name"><a href="http://amazething.github.io/">AMaze</a></h4>
+                <p>AMaze</p>
+        </section>
+      </section>
+    </footer>
+</article>
+    
+    
+    
+
+
+  </div>
+</main>
+
+
+<aside class="read-next outer">
+  <div class="inner">
+    <div class="read-next-feed">      
+      
+<article class="read-next-card" 
+            style="background-image: url(http://amazething.github.io/img/blog-cover.jpg);" >
+    <header class="read-next-card-header">
+        <small class="read-next-card-header-sitetitle">&mdash; AMaze &mdash;</small>
+        
+    </header>
+    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+    </div>
+
+    <div class="read-next-card-content">
+      
+        <ul>
+                      
+        
+          <li><a href="http://amazething.github.io/post/innovate/">华电60周年校庆编队报导</a></li>            
+        
+          <li><a href="http://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/">AMaze团队</a></li>            
+        
+          <li><a href="http://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/">Auterion在线讲座公开课</a></li>            
+        
+          <li><a href="http://amazething.github.io/post/amaze/">AMaze简介</a></li>            
+        </ul>
+    </div>
+    <footer class="read-next-card-footer">
+      
+    </footer>
+</article>
+
+
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="http://amazething.github.io/post/innovate/">
+      <div class="post-card-image" style="background-image: url(http://amazething.github.io/img/picture1.jpg)"></div>
+    </a>
+    
+
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="http://amazething.github.io/post/innovate/">
+          <header class="post-card-header">
+              <span class="post-card-tags">
+              #innovate  </span>
+              
+              <h2 class="post-card-title">华电60周年校庆编队报导</h2>
+          </header>
+          <section class="post-card-excerpt">
+               
+                <p>华电60周年校庆编队报导</p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+          <span class="post-card-author"><a href="http://amazething.github.io/">AMaze</a></span>
+      </footer>
+    </div>
+</article>
+      
+      
+      <article class="post-card post"> 
+    
+    <a class="post-card-image-link" href="http://amazething.github.io/post/navigation/">
+      <div class="post-card-image" style="background-image: url(http://amazething.github.io/img/plane.jpg)"></div>
+    </a>
+    
+
+    <div class="post-card-content">
+      <a class="post-card-content-link" href="http://amazething.github.io/post/navigation/">
+          <header class="post-card-header">
+              
+              <h2 class="post-card-title">机器人导航</h2>
+          </header>
+          <section class="post-card-excerpt">
+               
+                <p>机器人导航相关内容，共七部分。</p>
+              
+          </section>
+      </a>
+
+      <footer class="post-card-meta">
+          <img class="author-profile-image" src="http://amazething.github.io/img/amazething-logo.png" alt="Author" />
+          <span class="post-card-author"><a href="http://amazething.github.io/">AMaze</a></span>
+      </footer>
+    </div>
+</article>
+      
+    </div>
+  </div>
+</aside>
+
+<div class="floating-header">
+  <div class="floating-header-logo">
+    <a href="http://amazething.github.io/">
+      <img src="http://amazething.github.io/logo.png" alt=""/>
+      <span></span>
+    </a>
+  </div>
+  <span class="floating-header-divider">&mdash;</span>
+  <div class="floating-header-title">无人机编队</div>
+  <progress class="progress" value="0">
+    <div class="progress-container">
+      <span class="progress-bar"></span>
+    </div>
+  </progress>
+</div>
+
+
+
+<footer class="site-footer outer">
+  <div class="site-footer-content inner">
+    <section class="copyright" style="line-height: 1.3em;">
+      <a href="http://amazething.github.io/">AMaze</a> © 2018 <br>
+      <span style="font-size: 0.8em; color: #555;"></span>
+    </section>
+    <nav class="site-footer-nav">
+        
+        <a href="https://github.com/AMaze" target="_blank" rel="noopener">Github</a>
+    </nav>  
+  </div>
+</footer>
+
+</div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://amazething.github.io/js/jquery.fitvids.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script>
+
+
+
+
+
+$(document).ready(function () {
+    
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+</body></html>
