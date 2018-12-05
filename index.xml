@@ -80,15 +80,6 @@
     </item>
     
     <item>
-      <title>Auterion在线讲座公开课</title>
-      <link>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</link>
-      <pubDate>Sat, 10 Nov 2018 14:52:48 +0800</pubDate>
-      
-      <guid>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</guid>
-      <description>  </description>
-    </item>
-    
-    <item>
       <title>AMaze团队</title>
       <link>https://amazething.github.io/post/amaze%E5%9B%A2%E9%98%9F/</link>
       <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
@@ -99,6 +90,15 @@
 指导老师    指导老师（teacher）    吴华
 吴华（1981年生）博士现任华北电力大学控制与计算机工程学院副教授，硕士生导师，华北电力大学电力智能机器人工程技术研究中心主任。主要研究方向为：全自主巡检、机器人及无人机的同步定位与地图构建（SLAM）、影像识别、物流无人机的组合导航、多传感器融合、计算机视觉、机器学习、嵌入式计算等。AMaze团队是由吴华博士发起，并由一群喜爱智能机器人并愿意培养动手能力的优秀学生组成。通过对飞行机器人协同和环境感知等方向的实验和探索，不断提升团队成员的工程能力，鼓励形成各种有趣开源的创新作品。    Wu Hua
 WU (born in 1981, China) is Associate Professor of the School of Control and Computer Engineering at North China Electric Power University, where he does research at the intersection of robotics, computer vision and machine learning. Specifically, he investigates the use of SLAM and machine learning to enable autonomous inspection with embedded on-board computation using vision, LIDAR and smart sensors for drones in inspection, monitoring and logistics scenarios.</description>
+    </item>
+    
+    <item>
+      <title>Auterion在线讲座公开课</title>
+      <link>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</link>
+      <pubDate>Fri, 10 Nov 2017 14:52:48 +0800</pubDate>
+      
+      <guid>https://amazething.github.io/post/auterion%E5%9C%A8%E7%BA%BF%E8%AE%B2%E5%BA%A7%E5%85%AC%E5%BC%80%E8%AF%BE/</guid>
+      <description> </description>
     </item>
     
   </channel>
